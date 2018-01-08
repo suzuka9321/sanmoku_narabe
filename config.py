@@ -1,6 +1,6 @@
-# coding:shift-jis
+# coding:utf-8
 
-# ƒOƒ[ƒoƒ‹•Ï”
+# ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 
 # 1 | 2 | 3
 #---+---+---
