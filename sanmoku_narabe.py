@@ -30,7 +30,7 @@
 
 
 
-from turtle import Turtle
+from turtle import *
 import config
 
 class Sanmoku(Turtle):
@@ -38,7 +38,8 @@ class Sanmoku(Turtle):
         super(Sanmoku,self).__init__()
         
         self.table_drow()
-        self.getscreen().onclick(self.mark_whole)
+        onscreenclick(self.mark_whole)
+        mainloop()
     
     
     
