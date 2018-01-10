@@ -22,3 +22,4 @@ center_under = 0   # 8
 right_under = 0    # 9
 
 pass_count = 0
+count = 0
