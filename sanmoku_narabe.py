@@ -37,14 +37,16 @@ class Sanmoku(Turtle):
     def __init__(self):
         super(Sanmoku,self).__init__()
         
-        self.table_drow()
-        onscreenclick(self.mark_whole)
+        self.table_draw()
+        onscreenclick(self.game_start)
         mainloop()
     
     
     
-    #”Õ–Ê‚Ì•`‰æ
-    def table_drow(self):
+    
+    
+    def table_draw(self):
+        #”Õ–Ê‚Ì•`‰æ
         y = 360
         for i in range(4):
             self.penup()
@@ -60,6 +62,7 @@ class Sanmoku(Turtle):
             self.goto(x,360)
             x -= 120
         
+        #ƒŠƒZƒbƒgƒ{ƒ^ƒ“‚Ì•`‰æ
         self.penup()
         self.goto(120,-50)
         self.pendown()
@@ -83,6 +86,8 @@ class Sanmoku(Turtle):
         config.left_over = 0
         config.center_over = 0
         config.right_over = 0
+        
+        config.count = 0
     
     
     #ƒvƒŒƒCƒ„[‚Ì‘€ì‚ğ–³Œø‰»
@@ -100,15 +105,16 @@ class Sanmoku(Turtle):
                 
                 #—š—ğ‚ğ‰Šú‰»‚·‚é
                 self.reset()
+                onscreenclick(self.game_start)
     
     
     
-    def mark_whole(self,x,y):
-    	#ƒŠƒZƒbƒgƒ{ƒ^ƒ“B—š—ğ‚ğ‰Šú‰»‚·‚é
+    def game_start(self,x,y):
+        #ƒŠƒZƒbƒgƒ{ƒ^ƒ“B—š—ğ‚ğ‰Šú‰»‚·‚é
         if -170 < y and y < -50:
             if 120 < x and x < 240:
                 self.clear()
-                self.table_drow()
+                self.table_draw()
                 self.reset()
         config.pass_count = 0
         
@@ -116,58 +122,58 @@ class Sanmoku(Turtle):
         if 0 < y and y < 120:
             if 0 < x and x < 120:
                 if config.left_under == 0:
-                    self.getscreen().onclick(self.cpu_move)
-                    self.whole_left_under()
+                    onscreenclick(self.cpu_move)
+                    self.whole(60,10)
                     config.left_under = 1
                     config.pass_count = 1
             elif 120 < x and x < 240:
                 if config.center_under == 0:
-                    self.getscreen().onclick(self.cpu_move)
-                    self.whole_center_under()
+                    onscreenclick(self.cpu_move)
+                    self.whole(180,10)
                     config.center_under = 1
                     config.pass_count = 1
             elif 240 < x and x < 360:
                 if config.right_under == 0:
-                    self.getscreen().onclick(self.cpu_move)
-                    self.whole_right_under()
+                    onscreenclick(self.cpu_move)
+                    self.whole(300,10)
                     config.right_under = 1
                     config.pass_count = 1
         elif 120 < y and y < 240:
             if 0 < x and x < 120:
                 if config.left_middle == 0:
-                    self.getscreen().onclick(self.cpu_move)
-                    self.whole_left_middle()
+                    onscreenclick(self.cpu_move)
+                    self.whole(60,130)
                     config.left_middle = 1
                     config.pass_count = 1
             elif 120 < x and x < 240:
                 if config.center_middle == 0:
-                    self.getscreen().onclick(self.cpu_move)
-                    self.whole_center_middle()
+                    onscreenclick(self.cpu_move)
+                    self.whole(180,130)
                     config.center_middle = 1
                     config.pass_count = 1
             elif 240 < x and x < 360:
                 if config.right_middle == 0:
-                    self.getscreen().onclick(self.cpu_move)
-                    self.whole_right_middle()
+                    onscreenclick(self.cpu_move)
+                    self.whole(300,130)
                     config.right_middle = 1
                     config.pass_count = 1
         elif 240 < y and y < 360:
             if 0 < x and x < 120:
                 if config.left_over == 0:
-                    self.getscreen().onclick(self.cpu_move)
-                    self.whole_left_over()
+                    onscreenclick(self.cpu_move)
+                    self.whole(60,250)
                     config.left_over = 1
                     config.pass_count = 1
             elif x < 240:
                 if config.center_over == 0:
-                    self.getscreen().onclick(self.cpu_move)
-                    self.whole_center_over()
+                    onscreenclick(self.cpu_move)
+                    self.whole(180,250)
                     config.center_over = 1
                     config.pass_count = 1
             elif x < 360:
                 if config.right_over == 0:
-                    self.getscreen().onclick(self.cpu_move)
-                    self.whole_right_over()
+                    onscreenclick(self.cpu_move)
+                    self.whole(300,250)
                     config.right_over = 1
                     config.pass_count = 1
         
@@ -182,140 +188,153 @@ class Sanmoku(Turtle):
         if config.pass_count == 1:
             config.pass_count = 0
             #CPU‚ªƒŠ[ƒ`‚È‚çƒrƒ“ƒS‚·‚é‚Pè
-            self.cpu_cut_win(2,2)
+            self.cpu_cut_win(2)
             if config.pass_count == 0:
             	#ƒvƒŒƒCƒ„[‚ªƒŠ[ƒ`‚È‚çƒrƒ“ƒS‚³‚¹‚È‚¢‚æ‚¤‚É‚Pè
-                self.cpu_cut_win(1,2)
+                self.cpu_cut_win(1)
                 if config.pass_count == 0:
                 	#^‚ñ’†‚ª‹ó‚¢‚Ä‚¢‚½‚çA^‚ñ’†‚É‚Pè
-                	#‚¢‚È‚¯‚ê‚ÎŠpˆÈŠO‚É‚Pè
+                	#‚¢‚È‚¯‚ê‚ÎŠp‚É‚Pè
                     self.cpu_turn()
+            self.gameset()
         
-        self.gameset()
-        self.getscreen().onclick(self.mark_whole)
-    
-    
-    
-    
+        if config.pass_count == 1:
+            onscreenclick(self.game_start)
+            config.count += 1
+            if config.count == 5:
+                if self.bingo_judge(1) == False and self.bingo_judge(2) == False:
+                    print("ˆø‚«•ª‚¯!!@‰º‚Ì˜g‚ğ‰Ÿ‚µ‚ÄÄ’§í!!")
+
+
+
+
     #Ÿ”s”»’è
+    def bingo_judge(self,num):
+        if config.left_over == num and config.center_over== num and config.right_over == num or config.left_middle == num and config.center_middle == num and config.right_middle == num or config.left_under == num and config.center_under == num and config.right_under == num or config.left_over == num and config.left_middle == num and config.left_under == num or config.center_over == num and config.center_middle == num and config.center_under == num or config.right_over == num and config.right_middle == num and config.right_under == num or config.left_over == num and config.center_middle == num and config.right_under == num or config.right_over == num and config.center_middle == num and config.left_under == num:
+            return True
+        else:
+            return False
+
+
+
     def gameset(self):
-        if config.left_over == 1 and config.center_over== 1 and config.right_over == 1 or config.left_middle == 1 and config.center_middle == 1 and config.right_middle == 1 or config.left_under == 1 and config.center_under == 1 and config.right_under == 1 or config.left_over == 1 and config.left_middle == 1 and config.left_under == 1 or config.center_over == 1 and config.center_middle == 1 and config.center_under == 1 or config.right_over == 1 and config.right_middle == 1 and config.right_under == 1 or config.left_over == 1 and config.center_middle == 1 and config.right_under == 1 or config.right_over == 1 and config.center_middle == 1 and config.left_under == 1:
-            self.getscreen().onclick(self.game_out)
+        if self.bingo_judge(1) == True:
+            onscreenclick(self.game_out)
             config.pass_count = 0
-            print("›‚ÌŸ‚¿!!")
-        elif config.left_over == 2 and config.center_over== 2 and config.right_over == 2 or config.left_middle == 2 and config.center_middle == 2 and config.right_middle == 2 or config.left_under == 2 and config.center_under == 2 and config.right_under == 2 or config.left_over == 2 and config.left_middle == 2 and config.left_under == 2 or config.center_over == 2 and config.center_middle == 2 and config.center_under == 2 or config.right_over == 2 and config.right_middle == 2 and config.right_under == 2 or config.left_over == 2 and config.center_middle == 2 and config.right_under == 2 or config.right_over == 2 and config.center_middle == 2 and config.left_under == 2:
-            self.getscreen().onclick(self.game_out)
+            print("›‚ÌŸ‚¿!!@‰º‚Ì˜g‚ğ‰Ÿ‚µ‚ÄÄ’§í!!")
+        if self.bingo_judge(2) == True:
+            onscreenclick(self.game_out)
             config.pass_count = 0
-            print("~‚ÌŸ‚¿!!")
-    
-    
-    #CPU‚Ìè”ÔB‚˜‚Ì’l‚É‚æ‚Á‚Äƒrƒ“ƒS‚ğ‘j~‚Æƒrƒ“ƒS‚·‚é“®‚«B‚™‚ÅCPU‚Ìè”Ô‚ğ‹L˜^
-    def cpu_cut_win(self,x,y):
-        if config.left_over == x and config.center_over == x and config.right_over == 0:
-            self.cross_right_over()
-            config.right_over = y
-            config.pass_count = 1
-        elif config.left_middle == x and config.center_middle == x and config.right_middle == 0:
-            self.cross_right_middle()
-            config.right_middle = y
-            config.pass_count = 1
-        elif config.left_under == x and config.center_under == x and config.right_under == 0:
-            self.cross_right_under()
-            config.right_under = y
-            config.pass_count = 1
-
-        elif config.left_over == x and config.right_over == x and config.center_over == 0:
-            self.cross_center_over()
-            config.center_over = y
-            config.pass_count = 1
-        elif config.left_middle == x and config.right_middle == x and config.center_middle == 0:
-            self.cross_center_middle()
-            config.center_middle = y
-            config.pass_count = 1
-        elif config.left_under == x and config.right_under == x and config.center_under == 0:
-            self.cross_center_under()
-            config.center_under = y
-            config.pass_count = 1
-
-        elif config.center_over == x and config.right_over == x and config.left_over == 0:
-            self.cross_left_over()
-            config.left_over = y
-            config.pass_count = 1
-        elif config.center_middle == x and config.right_middle == x and config.left_middle == 0:
-            self.cross_left_middle()
-            config.left_middle = y
-            config.pass_count = 1
-        elif config.center_under == x and config.right_under == x and config.left_under == 0:
-            self.cross_left_under()
-            config.left_under = y
-            config.pass_count = 1
+            print("~‚ÌŸ‚¿!!@‰º‚Ì˜g‚ğ‰Ÿ‚µ‚ÄÄ’§í!!")
 
 
-        elif config.left_over == x and config.left_middle == x and config.left_under == 0:
-            self.cross_left_under()
-            config.left_under = y
+    #CPU‚Ìè”ÔB‚˜‚Ì’l‚É‚æ‚Á‚Äƒrƒ“ƒS‚ğ‘j~‚Æƒrƒ“ƒS‚·‚é“®‚«
+    def cpu_cut_win(self,num):
+        if config.left_over == num and config.center_over == num and config.right_over == 0:
+            self.cross(300,250)
+            config.right_over = 2
             config.pass_count = 1
-        elif config.center_over == x and config.center_middle == x and config.center_under == 0:
-            self.cross_center_under()
-            config.center_under = y
+        elif config.left_middle == num and config.center_middle == num and config.right_middle == 0:
+            self.cross(300,130)
+            config.right_middle = 2
             config.pass_count = 1
-        elif config.right_over == x and config.right_middle == x and config.right_under == 0:
-            self.cross_right_under()
-            config.right_under = y
-            config.pass_count = 1
-
-        elif config.left_over == x and config.left_under == x and config.left_middle == 0:
-            self.cross_left_middle()
-            config.left_middle = y
-            config.pass_count = 1
-        elif config.center_over == x and config.center_under == x and config.center_middle == 0:
-            self.cross_center_middle()
-            config.center_middle = y
-            config.pass_count = 1
-        elif config.right_over == x and config.right_under == x and config.right_middle == 0:
-            self.cross_right_middle()
-            config.right_middle = y
+        elif config.left_under == num and config.center_under == num and config.right_under == 0:
+            self.cross(300,10)
+            config.right_under = 2
             config.pass_count = 1
 
-        elif config.left_middle == x and config.left_under == x and config.left_over == 0:
-            self.cross_left_over()
-            config.left_over = y
+        elif config.left_over == num and config.right_over == num and config.center_over == 0:
+            self.cross(180,250)
+            config.center_over = 2
             config.pass_count = 1
-        elif config.center_middle == x and config.center_under == x and config.center_over == 0:
-            self.cross_center_over()
-            config.center_over = y
+        elif config.left_middle == num and config.right_middle == num and config.center_middle == 0:
+            self.cross(180,130)
+            config.center_middle = 2
             config.pass_count = 1
-        elif config.right_middle == x and config.right_under == x and config.right_over == 0:
-            self.cross_right_over()
-            config.right_over = y
+        elif config.left_under == num and config.right_under == num and config.center_under == 0:
+            self.cross(180,10)
+            config.center_under = 2
+            config.pass_count = 1
+
+        elif config.center_over == num and config.right_over == num and config.left_over == 0:
+            self.cross(60,250)
+            config.left_over = 2
+            config.pass_count = 1
+        elif config.center_middle == num and config.right_middle == num and config.left_middle == 0:
+            self.cross(60,130)
+            config.left_middle = 2
+            config.pass_count = 1
+        elif config.center_under == num and config.right_under == num and config.left_under == 0:
+            self.cross(60,10)
+            config.left_under = 2
             config.pass_count = 1
 
 
-        elif config.left_over == x and config.center_middle == x and config.right_under == 0:
-            self.cross_right_under()
-            config.right_under = y
+        elif config.left_over == num and config.left_middle == num and config.left_under == 0:
+            self.cross(60,10)
+            config.left_under = 2
             config.pass_count = 1
-        elif config.right_over == x and config.center_middle == x and config.left_under == 0:
-            self.cross_left_under()
-            config.left_under = y
+        elif config.center_over == num and config.center_middle == num and config.center_under == 0:
+            self.cross(180,10)
+            config.center_under = 2
             config.pass_count = 1
-
-        elif config.left_over == x and config.right_under == x and config.center_middle == 0:
-            self.cross_center_middle()
-            config.center_middle = y
-            config.pass_count = 1
-        elif config.right_over == x and config.left_under == x and config.center_middle == 0:
-            self.cross_center_middle()
-            config.center_middle = y
+        elif config.right_over == num and config.right_middle == num and config.right_under == 0:
+            self.cross(300,10)
+            config.right_under = 2
             config.pass_count = 1
 
-        elif config.center_middle== x and config.right_under == x and config.left_over == 0:
-            self.cross_left_over()
-            config.left_over = y
+        elif config.left_over == num and config.left_under == num and config.left_middle == 0:
+            self.cross(60,130)
+            config.left_middle = 2
             config.pass_count = 1
-        elif config.center_middle == x and config.left_under== x and config.right_over == 0:
-            self.cross_right_over()
-            config.right_over = y
+        elif config.center_over == num and config.center_under == num and config.center_middle == 0:
+            self.cross(180,130)
+            config.center_middle = 2
+            config.pass_count = 1
+        elif config.right_over == num and config.right_under == num and config.right_middle == 0:
+            self.cross(300,130)
+            config.right_middle = 2
+            config.pass_count = 1
+
+        elif config.left_middle == num and config.left_under == num and config.left_over == 0:
+            self.cross(60,250)
+            config.left_over = 2
+            config.pass_count = 1
+        elif config.center_middle == num and config.center_under == num and config.center_over == 0:
+            self.cross(180,250)
+            config.center_over = 2
+            config.pass_count = 1
+        elif config.right_middle == num and config.right_under == num and config.right_over == 0:
+            self.cross(300,250)
+            config.right_over = 2
+            config.pass_count = 1
+
+
+        elif config.left_over == num and config.center_middle == num and config.right_under == 0:
+            self.cross(300,10)
+            config.right_under = 2
+            config.pass_count = 1
+        elif config.right_over == num and config.center_middle == num and config.left_under == 0:
+            self.cross(60,10)
+            config.left_under = 2
+            config.pass_count = 1
+
+        elif config.left_over == num and config.right_under == num and config.center_middle == 0:
+            self.cross(180,130)
+            config.center_middle = 2
+            config.pass_count = 1
+        elif config.right_over == num and config.left_under == num and config.center_middle == 0:
+            self.cross(180,130)
+            config.center_middle = 2
+            config.pass_count = 1
+
+        elif config.center_middle== num and config.right_under == num and config.left_over == 0:
+            self.cross(60,250)
+            config.left_over = 2
+            config.pass_count = 1
+        elif config.center_middle == num and config.left_under== num and config.right_over == 0:
+            self.cross(300,250)
+            config.right_over = 2
             config.pass_count = 1
 
 
@@ -324,47 +343,49 @@ class Sanmoku(Turtle):
     def cpu_turn(self):
     	#^‚ñ’†‚ª‹ó‚¢‚Ä‚¢‚½‚çA^‚ñ’†‚É~
         if config.center_middle == 0:
-            self.cross_center_middle()
+            self.cross(180,130)
             config.center_middle = 2
         
-        #‹ó‚¢‚Ä‚¢‚È‚¯‚ê‚ÎAŠpˆÈŠO‚É‚Pè
-        elif config.center_over == 0:
-            self.cross_center_over()
-            config.center_over = 2
-        
-        elif config.right_middle == 0:
-            self.cross_right_middle()
-            config.right_middle = 2
-        
-        elif config.center_under == 0:
-            self.cross_center_under()
-            config.center_under = 2
-        
-        elif config.left_middle == 0:
-            self.cross_left_middle()
-            config.left_middle = 2
-        
+        #‹ó‚¢‚Ä‚¢‚È‚¯‚ê‚ÎAŠp‚É‚Pè
         elif config.left_over == 0:
-            self.cross_left_over()
+            self.cross(60,250)
             config.left_over = 2
         
         elif config.right_over == 0:
-            self.cross_right_over()
+            self.cross(300,250)
             config.right_over = 2
         
         elif config.right_under == 0:
-            self.cross_right_under()
+            self.cross(300,10)
             config.right_under = 2
         
         elif config.left_under == 0:
-            self.cross_left_under()
+            self.cross(60,10)
             config.left_under = 2
         
+        elif config.center_over == 0:
+            self.cross(180,250)
+            config.center_over = 2
+        
+        elif config.right_middle == 0:
+            self.cross(300,130)
+            config.right_middle = 2
+        
+        elif config.center_under == 0:
+            self.cross(180,10)
+            config.center_under = 2
+        
+        elif config.left_middle == 0:
+            self.cross(60,130)
+            config.left_middle = 2
+        config.pass_count = 1
 
 
 
-    #Z‚ğ•`‚­
-    def whole(self):
+    #x’ly’l‚Ì‰ÓŠ‚ÉZ‚ğ•`‚­
+    def whole(self,x,y):
+        self.penup()
+        self.goto(x,y)
         num = self.heading()
         self.right(num)
         self.pendown()
@@ -372,8 +393,10 @@ class Sanmoku(Turtle):
 
 
 
-    #~‚ğ•`‚­
-    def cross(self):
+    #x’ly’l‚Ì‰ÓŠ‚É~‚ğ•`‚­
+    def cross(self,x,y):
+        self.penup()
+        self.goto(x,y)
         num = self.heading()
         self.right(num)
         self.penup()
@@ -389,128 +412,5 @@ class Sanmoku(Turtle):
         self.forward(141)
 
 
-    #¶ã‚É›‚ğ•`‚­
-    def whole_left_over(self):
-        self.penup()
-        self.goto(60,250)
-        self.whole()
-    
-    
-    #¶’†‚É›‚ğ•`‚­
-    def whole_left_middle(self):
-        self.penup()
-        self.goto(60,130)
-        self.whole()
-    
-    
-    #¶‰º‚É›‚ğ•`‚­
-    def whole_left_under(self):
-        self.penup()
-        self.goto(60,10)
-        self.whole()
-    
-    
-    #’†ã‚É›‚ğ•`‚­
-    def whole_center_over(self):
-        self.penup()
-        self.goto(180,250)
-        self.whole()
-    
-    
-    #’†’†‚É›‚ğ•`‚­
-    def whole_center_middle(self):
-        self.penup()
-        self.goto(180,130)
-        self.whole()
-    
-    
-    #’†‰º‚É›‚ğ•`‚­
-    def whole_center_under(self):
-        self.penup()
-        self.goto(180,10)
-        self.whole()
-    
-    
-    #‰Eã‚É›‚ğ•`‚­
-    def whole_right_over(self):
-        self.penup()
-        self.goto(300,250)
-        self.whole()
-    
-    
-    #‰E’†‚É›‚ğ•`‚­
-    def whole_right_middle(self):
-        self.penup()
-        self.goto(300,130)
-        self.whole()
-    
-    
-    #‰E‰º‚É›‚ğ•`‚­
-    def whole_right_under(self):
-        self.penup()
-        self.goto(300,10)
-        self.whole()
-    
-    
-    
-    #¶ã‚É~‚ğ•`‚­
-    def cross_left_over(self):
-        self.penup()
-        self.goto(60,250)
-        self.cross()
-    
-    
-    #¶’†‚É~‚ğ•`‚­
-    def cross_left_middle(self):
-        self.penup()
-        self.goto(60,130)
-        self.cross()
-    
-    
-    #¶‰º‚É~‚ğ•`‚­
-    def cross_left_under(self):
-        self.penup()
-        self.goto(60,10)
-        self.cross()
-    
-    
-    #’†ã‚É~‚ğ•`‚­
-    def cross_center_over(self):
-        self.penup()
-        self.goto(180,250)
-        self.cross()
-    
-    
-    #’†’†‚É~‚ğ•`‚­
-    def cross_center_middle(self):
-        self.penup()
-        self.goto(180,130)
-        self.cross()
-    
-    
-    #’†‰º‚É~‚ğ•`‚­
-    def cross_center_under(self):
-        self.penup()
-        self.goto(180,10)
-        self.cross()
-    
-    
-    #‰Eã‚É~‚ğ•`‚­
-    def cross_right_over(self):
-        self.penup()
-        self.goto(300,250)
-        self.cross()
-    
-    
-    #‰E’†‚É~‚ğ•`‚­
-    def cross_right_middle(self):
-        self.penup()
-        self.goto(300,130)
-        self.cross()
-    
-    
-    #‰E‰º‚É~‚ğ•`‚­
-    def cross_right_under(self):
-        self.penup()
-        self.goto(300,10)
-        self.cross()
+if __name__ == "__main__":
+    san = Sanmoku()
